@@ -17,8 +17,7 @@ services:
       - /var/log/redis/redis01-master/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      app_net:
-        ipv4_address: 172.31.0.10
+      - app_net
   
   redis02-master:
     image: redis
@@ -37,8 +36,7 @@ services:
       - /var/log/redis/redis02-master/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      app_net:
-        ipv4_address: 172.31.0.20
+      - app_net
   
   redis03-master:
     image: redis
@@ -57,8 +55,7 @@ services:
       - /var/log/redis/redis03-master/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      app_net:
-        ipv4_address: 172.31.0.30
+      - app_net
   
   redis01-slave:
     image: redis
@@ -77,8 +74,7 @@ services:
       - /var/log/redis/redis01-slave/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      app_net:
-        ipv4_address: 172.31.0.40
+      - app_net
   
   redis02-slave:
     image: redis 
@@ -97,8 +93,7 @@ services:
       - /var/log/redis/redis02-slave/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      app_net:
-        ipv4_address: 172.31.0.50
+      - app_net
   
   redis03-slave:
     image: redis
@@ -117,21 +112,15 @@ services:
       - /var/log/redis/redis03-slave/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      app_net:
-        ipv4_address: 172.31.0.60
+      - app_net
   
   redis-commander:
     image: rediscommander/redis-commander:latest
     environment:
-      - REDIS_HOSTS=redis01-master:172.31.0.10:6379,redis02-master:172.31.0.20:6380,redis03-master:172.31.0.30:6381,redis01-slave:172.31.0.40:6382,redis02-slave:172.31.0.50:6383,redis03-slave:172.31.0.60:6384
+      - REDIS_HOSTS=redis01-master:6379,redis02-master:6380,redis03-master:6381,redis01-slave:6382,redis02-slave:6383,redis03-slave:6384
     ports:
       - 8081:8081
 
 networks:
   app_net:
     driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.31.0.0/20
-        - gateway: 172.31.0.1
