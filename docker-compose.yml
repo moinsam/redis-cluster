@@ -19,43 +19,43 @@ services:
     networks:
       - app_net
   
-  redis02-master:
-    image: redis
-    user: root
-    sysctls:
-      net.core.somaxconn: 20000
-    ulimits:
-      nofile:
-        soft: 64000
-        hard: 64000
-    ports:
-      - 6380:6379
-      - 16380:16379
-    volumes:
-      - ./redis02-master/conf/redis.conf:/usr/local/etc/redis/redis.conf
-      - /var/log/redis/redis02-master/redis.log:/var/log/redis/redis.log
-    command: redis-server /usr/local/etc/redis/redis.conf
-    networks:
-      - app_net
+  # redis02-master:
+  #   image: redis
+  #   user: root
+  #   sysctls:
+  #     net.core.somaxconn: 20000
+  #   ulimits:
+  #     nofile:
+  #       soft: 64000
+  #       hard: 64000
+  #   ports:
+  #     - 6380:6379
+  #     - 16380:16379
+  #   volumes:
+  #     - ./redis02-master/conf/redis.conf:/usr/local/etc/redis/redis.conf
+  #     - /var/log/redis/redis02-master/redis.log:/var/log/redis/redis.log
+  #   command: redis-server /usr/local/etc/redis/redis.conf
+  #   networks:
+  #     - app_net
   
-  redis03-master:
-    image: redis
-    user: root
-    sysctls:
-      net.core.somaxconn: 20000
-    ulimits:
-      nofile:
-        soft: 64000
-        hard: 64000
-    ports:
-      - 6381:6379
-      - 16381:16379
-    volumes:
-      - ./redis03-master/conf/redis.conf:/usr/local/etc/redis/redis.conf
-      - /var/log/redis/redis03-master/redis.log:/var/log/redis/redis.log
-    command: redis-server /usr/local/etc/redis/redis.conf
-    networks:
-      - app_net
+  # redis03-master:
+  #   image: redis
+  #   user: root
+  #   sysctls:
+  #     net.core.somaxconn: 20000
+  #   ulimits:
+  #     nofile:
+  #       soft: 64000
+  #       hard: 64000
+  #   ports:
+  #     - 6381:6379
+  #     - 16381:16379
+  #   volumes:
+  #     - ./redis03-master/conf/redis.conf:/usr/local/etc/redis/redis.conf
+  #     - /var/log/redis/redis03-master/redis.log:/var/log/redis/redis.log
+  #   command: redis-server /usr/local/etc/redis/redis.conf
+  #   networks:
+  #     - app_net
   
   redis01-slave:
     image: redis
@@ -76,48 +76,49 @@ services:
     networks:
       - app_net
   
-  redis02-slave:
-    image: redis 
-    user: root
-    sysctls:
-      net.core.somaxconn: 20000
-    ulimits:
-      nofile:
-        soft: 64000
-        hard: 64000
-    ports:
-      - 6383:6379
-      - 16383:16379
-    volumes:
-      - ./redis02-slave/conf/redis.conf:/usr/local/etc/redis/redis.conf
-      - /var/log/redis/redis02-slave/redis.log:/var/log/redis/redis.log
-    command: redis-server /usr/local/etc/redis/redis.conf
-    networks:
-      - app_net
+  # redis02-slave:
+  #   image: redis 
+  #   user: root
+  #   sysctls:
+  #     net.core.somaxconn: 20000
+  #   ulimits:
+  #     nofile:
+  #       soft: 64000
+  #       hard: 64000
+  #   ports:
+  #     - 6383:6379
+  #     - 16383:16379
+  #   volumes:
+  #     - ./redis02-slave/conf/redis.conf:/usr/local/etc/redis/redis.conf
+  #     - /var/log/redis/redis02-slave/redis.log:/var/log/redis/redis.log
+  #   command: redis-server /usr/local/etc/redis/redis.conf
+  #   networks:
+  #     - app_net
   
-  redis03-slave:
-    image: redis
-    user: root
-    sysctls:
-      net.core.somaxconn: 20000
-    ulimits:
-      nofile:
-        soft: 64000
-        hard: 64000
-    ports:
-      - 6384:6379
-      - 16384:16379
-    volumes:
-      - ./redis03-slave/conf/redis.conf:/usr/local/etc/redis/redis.conf
-      - /var/log/redis/redis03-slave/redis.log:/var/log/redis/redis.log
-    command: redis-server /usr/local/etc/redis/redis.conf
-    networks:
-      - app_net
+  # redis03-slave:
+  #   image: redis
+  #   user: root
+  #   sysctls:
+  #     net.core.somaxconn: 20000
+  #   ulimits:
+  #     nofile:
+  #       soft: 64000
+  #       hard: 64000
+  #   ports:
+  #     - 6384:6379
+  #     - 16384:16379
+  #   volumes:
+  #     - ./redis03-slave/conf/redis.conf:/usr/local/etc/redis/redis.conf
+  #     - /var/log/redis/redis03-slave/redis.log:/var/log/redis/redis.log
+  #   command: redis-server /usr/local/etc/redis/redis.conf
+  #   networks:
+  #     - app_net
   
   redis-commander:
     image: rediscommander/redis-commander:latest
     environment:
-      - REDIS_HOSTS=redis01-master:6379,redis02-master:6380,redis03-master:6381,redis01-slave:6382,redis02-slave:6383,redis03-slave:6384
+      # - REDIS_HOSTS=redis01-master:6379,redis02-master:6380,redis03-master:6381,redis01-slave:6382,redis02-slave:6383,redis03-slave:6384
+      - REDIS_HOSTS=redis01-master:6379,redis01-slave:6382
     ports:
       - 8081:8081
 
