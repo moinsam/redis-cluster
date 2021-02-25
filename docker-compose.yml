@@ -1,4 +1,4 @@
-version: '2.2'
+version: '3.7'
 services:
   redis01-master:
     image: redis 
@@ -16,8 +16,8 @@ services:
       - ./redis01-master/conf/redis.conf:/usr/local/etc/redis/redis.conf
       - /var/log/redis/redis01-master/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
-    networks:
-      - app_net
+    # networks:
+      # - app_net
   
   # redis02-master:
   #   image: redis
@@ -73,8 +73,8 @@ services:
       - ./redis01-slave/conf/redis.conf:/usr/local/etc/redis/redis.conf
       - /var/log/redis/redis01-slave/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
-    networks:
-      - app_net
+    # networks:
+      # - app_net
   
   # redis02-slave:
   #   image: redis 
@@ -122,6 +122,6 @@ services:
     ports:
       - 8081:8081
 
-networks:
-  app_net:
-    driver: bridge
+# networks:
+  # app_net:
+    # driver: bridge
