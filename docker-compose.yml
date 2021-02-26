@@ -17,7 +17,8 @@ services:
       - /var/log/redis/redis01-master/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      - nlu-redis-cluster
+      nlu-redis:
+        ipv4_address: 172.19.0.10
   
   redis02-master:
     image: redis
@@ -36,7 +37,8 @@ services:
       - /var/log/redis/redis02-master/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      - nlu-redis-cluster
+      nlu-redis:
+        ipv4_address: 172.19.0.20
   
   redis03-master:
     image: redis
@@ -55,7 +57,8 @@ services:
       - /var/log/redis/redis03-master/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      - nlu-redis-cluster
+      nlu-redis:
+        ipv4_address: 172.19.0.30
   
   redis01-slave:
     image: redis
@@ -74,7 +77,8 @@ services:
       - /var/log/redis/redis01-slave/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      - nlu-redis-cluster
+      nlu-redis:
+        ipv4_address: 172.19.0.40
   
   redis02-slave:
     image: redis 
@@ -93,7 +97,8 @@ services:
       - /var/log/redis/redis02-slave/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      - nlu-redis-cluster
+      nlu-redis:
+        ipv4_address: 172.19.0.50
   
   redis03-slave:
     image: redis
@@ -112,15 +117,21 @@ services:
       - /var/log/redis/redis03-slave/redis.log:/var/log/redis/redis.log
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
-      - nlu-redis-cluster
+      nlu-redis:
+        ipv4_address: 172.19.0.60
   
   redis-commander:
     image: rediscommander/redis-commander:latest
     environment:
-      - REDIS_HOSTS=redis01-master:6379,redis02-master:6380,redis03-master:6381,redis01-slave:6382,redis02-slave:6383,redis03-slave:6384
+      - REDIS_HOSTS=redis01-master:172.19.0.10:6379,redis02-master:172.19.0.20:6380,redis03-master:172.19.0.30:6381,redis01-slave:172.19.0.40:6382,redis02-slave:172.19.0.50:6383,redis03-slave:172.19.0.60:6384
     ports:
       - 8081:8081
 
 networks:
-  nlu-redis-cluster:
+  nlu-redis:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/16
+        - gateway: 172.19.0.1
